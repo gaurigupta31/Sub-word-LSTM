@@ -3,7 +3,7 @@ import h5py
 import pickle
 from copy import deepcopy
 from sklearn.metrics import confusion_matrix
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from keras.models import Sequential
 from keras.preprocessing import sequence
 from keras import backend as K
@@ -18,7 +18,7 @@ from MyNormalizer import token
 ################# GLOBAL VARIABLES #####################
 #Filenames
 #TODO: Add to coding conventions that directories are to always end with '/'
-Masterdir = '/media/ameya/Research/Sub-word-LSTM/'
+Masterdir = ''
 Datadir = 'Data/'
 Modeldir = 'Models/'
 Featuredir = 'Features/'
@@ -206,7 +206,7 @@ def save_model(Masterdir,filename,model):
 	Output  -> Nil
 	"""
 	#Referred from:- http://keras.io/getting-started/faq/#how-can-i-save-a-keras-model
-	model.save_weights(Masterdir+charrnndir+'Models/LSTM_'+filename+'_weights.h5')
+	model.save_weights(Masterdir+'LSTM_'+filename+'_weights.h5')
 	json_string = model.to_json()
 	f = open(Masterdir+charrnndir+'Models/'+'LSTM_'+filename+'_architecture.json','w')
 	f.write(json_string)
@@ -304,8 +304,3 @@ if __name__ == '__main__':
 	activations = get_activations(model, 4, X_test)
 	features_test = np.asarray(activations)
 	print('Features extracted!')
-	
-	print('Saving experiment...')
-	save_model(Masterdir,exp_details,model)
-	save_data(Masterdir,exp_details,X_train,X_test,y_train,y_test,features_train,features_test)
-	print('Saved! Experiment finished!')
